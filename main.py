@@ -1,85 +1,107 @@
+from os import system, name
+import sys
 from docx import Document
 import pandas as pd
 
-doc = Document('Test.docx')
 
-# Create dictionary
-data = {
-    'fb': [],
-    'score': [],
-    'anz_ma': []
-}
+# Functions
+def clear_screen():
+    if name == 'nt':
+        _ = system('cls')
+    else:
+        _ = system('clear')
 
-# Append fb
-r1 = 1
-c1 = 2
-data['fb'] = [doc.tables[0].cell(r1, c1).text]*11 + [doc.tables[0].cell(r1, c1+1).text]*11 + [doc.tables[0].cell(r1, c1+2).text]*11 + [doc.tables[0].cell(r1, c1+3).text]*11 + [doc.tables[0].cell(r1, c1+4).text]*11
+def logo():
+    print('+-+ +-+ +-+ +-+ +-+   +-+ +-+ +-+ +-+ +-+ +-+')
+    print('|B| |L| |A| |C| |K|   |C| |o| |d| |i| |n| |g|')
+    print('+-+ +-+ +-+ +-+ +-+   +-+ +-+ +-+ +-+ +-+ +-+')
+    print('\n' + '-' * 45)
+    print('Program: Docx.Table Analysis')
 
-# Append score
-data['score'] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]*5
 
-# Append anz_ma
-data['anz_ma'] = [
-    doc.tables[0].cell(r1 + 1, c1 + 0).text,
-    doc.tables[0].cell(r1 + 3, c1 + 0).text,
-    doc.tables[0].cell(r1 + 5, c1 + 0).text,
-    doc.tables[0].cell(r1 + 7, c1 + 0).text,
-    doc.tables[0].cell(r1 + 9, c1 + 0).text,
-    doc.tables[0].cell(r1 + 11, c1 + 0).text,
-    doc.tables[0].cell(r1 + 13, c1 + 0).text,
-    doc.tables[0].cell(r1 + 15, c1 + 0).text,
-    doc.tables[0].cell(r1 + 17, c1 + 0).text,
-    doc.tables[0].cell(r1 + 19, c1 + 0).text,
-    doc.tables[0].cell(r1 + 21, c1 + 0).text,
+# Main
+while True:
+    clear_screen()
+    logo()
+    print('\n' + '-' * 45)
+    print('Commands:')
+    print('[1] Read Docx.Table')
+    # print('[2] test')
+    # print('[3] test')
+    # print('[4] test')
+    # print('[5] test')
+    # print('\n')
+    print('[9] Quit program')
+    print('-' * 45)
+    input_ = input('>>> ')
 
-    doc.tables[0].cell(r1 + 1, c1 + 1).text,
-    doc.tables[0].cell(r1 + 3, c1 + 1).text,
-    doc.tables[0].cell(r1 + 5, c1 + 1).text,
-    doc.tables[0].cell(r1 + 7, c1 + 1).text,
-    doc.tables[0].cell(r1 + 9, c1 + 1).text,
-    doc.tables[0].cell(r1 + 11, c1 + 1).text,
-    doc.tables[0].cell(r1 + 13, c1 + 1).text,
-    doc.tables[0].cell(r1 + 15, c1 + 1).text,
-    doc.tables[0].cell(r1 + 17, c1 + 1).text,
-    doc.tables[0].cell(r1 + 19, c1 + 1).text,
-    doc.tables[0].cell(r1 + 21, c1 + 1).text,
+    # Quit program
+    if input_ == '9':
+        clear_screen()
+        sys.exit(1)
 
-    doc.tables[0].cell(r1 + 1, c1 + 2).text,
-    doc.tables[0].cell(r1 + 3, c1 + 2).text,
-    doc.tables[0].cell(r1 + 5, c1 + 2).text,
-    doc.tables[0].cell(r1 + 7, c1 + 2).text,
-    doc.tables[0].cell(r1 + 9, c1 + 2).text,
-    doc.tables[0].cell(r1 + 11, c1 + 2).text,
-    doc.tables[0].cell(r1 + 13, c1 + 2).text,
-    doc.tables[0].cell(r1 + 15, c1 + 2).text,
-    doc.tables[0].cell(r1 + 17, c1 + 2).text,
-    doc.tables[0].cell(r1 + 19, c1 + 2).text,
-    doc.tables[0].cell(r1 + 21, c1 + 2).text,
+    # Read Docx.Table
+    if input_ == '1':
 
-    doc.tables[0].cell(r1 + 1, c1 + 3).text,
-    doc.tables[0].cell(r1 + 3, c1 + 3).text,
-    doc.tables[0].cell(r1 + 5, c1 + 3).text,
-    doc.tables[0].cell(r1 + 7, c1 + 3).text,
-    doc.tables[0].cell(r1 + 9, c1 + 3).text,
-    doc.tables[0].cell(r1 + 11, c1 + 3).text,
-    doc.tables[0].cell(r1 + 13, c1 + 3).text,
-    doc.tables[0].cell(r1 + 15, c1 + 3).text,
-    doc.tables[0].cell(r1 + 17, c1 + 3).text,
-    doc.tables[0].cell(r1 + 19, c1 + 3).text,
-    doc.tables[0].cell(r1 + 21, c1 + 3).text,
+        while True:
+            clear_screen()
+            logo()
+            print('Menue: Read Docx.Table')
+            print('-' * 45)
+            print('-No menue-')
+            print('-' * 45)
+            file_ = input('Enter file-name: >>> ')
 
-    doc.tables[0].cell(r1 + 1, c1 + 4).text,
-    doc.tables[0].cell(r1 + 3, c1 + 4).text,
-    doc.tables[0].cell(r1 + 5, c1 + 4).text,
-    doc.tables[0].cell(r1 + 7, c1 + 4).text,
-    doc.tables[0].cell(r1 + 9, c1 + 4).text,
-    doc.tables[0].cell(r1 + 11, c1 + 4).text,
-    doc.tables[0].cell(r1 + 13, c1 + 4).text,
-    doc.tables[0].cell(r1 + 15, c1 + 4).text,
-    doc.tables[0].cell(r1 + 17, c1 + 4).text,
-    doc.tables[0].cell(r1 + 19, c1 + 4).text,
-    doc.tables[0].cell(r1 + 21, c1 + 4).text]
+            # Test-Document
+            # doc = Document('Test.docx')
 
-df = pd.DataFrame.from_dict(data)
+            try:
+                doc = Document(file_)
+            except:
+                print('File not found. Script terminated.')
+                sys.exit(1)
 
-print(df)
+            while True:
+                try:
+                    tables = doc.tables
+                except:
+                    print('No tables in this Docx.File. Script terminated.')
+                    sys.exit(1)
+
+                clear_screen()
+                logo()
+                print('Menue: Read Docx.Table')
+                print(len(tables), ' tables(s) detected.')
+                print('-' * 45)
+                print('-No menue-')
+                print('-' * 45)
+                table_ = int(input('Enter table-number: >>> '))-1
+
+                result = []
+
+                try:
+                    for row in tables[table_].rows:
+                        interim = []
+                        result.append(interim)
+                        for cell in row.cells:
+                            interim.append(cell.text)
+                except:
+                    print('Table not found. Script terminated.')
+                    sys.exit(1)
+
+                clear_screen()
+                logo()
+                print('Menue: Read Docx.Table')
+                print(len(tables), ' tables(s) detected.')
+                print('Table ', table_ + 1, ' selected.')
+                print('-' * 45)
+                print('-No menue-')
+                print('-' * 45)
+
+                print('\n>>> Printing results <<<')
+                # print(result)
+                labels = result[0]
+                df = pd.DataFrame.from_records(result[1:], columns=labels)
+
+                print(df)
+                sys.exit(1)
