@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from os import system, name
 import sys
 from docx import Document
@@ -11,7 +13,8 @@ def clear_screen():
     else:
         _ = system('clear')
 
-def logo():
+
+def head():
     print('+-+ +-+ +-+ +-+ +-+   +-+ +-+ +-+ +-+ +-+ +-+')
     print('|B| |L| |A| |C| |K|   |C| |o| |d| |i| |n| |g|')
     print('+-+ +-+ +-+ +-+ +-+   +-+ +-+ +-+ +-+ +-+ +-+')
@@ -19,10 +22,9 @@ def logo():
     print('Program: Docx.Table Analysis')
 
 
-# Main
-while True:
+def homemenu():
     clear_screen()
-    logo()
+    head()
     print('\n' + '-' * 45)
     print('Commands:')
     print('[1] Read Docx.Table')
@@ -37,71 +39,101 @@ while True:
 
     # Quit program
     if input_ == '9':
-        clear_screen()
+        print('Program terminated.')
         sys.exit(1)
 
     # Read Docx.Table
-    if input_ == '1':
+    elif input_ == '1':
+        submenu_1()
+
+    # Break
+    else:
+        print('No valid choice. Program terminated.')
+        sys.exit(1)
+
+
+def submenu_1():
+    while True:
+        info_ = 'no further info'
+        clear_screen()
+        head()
+        print('Submenu: Read Docx.Table')
+        print('-' * 45)
+        print(info_)
+        print('-' * 45)
+        file_ = input('Enter file-name: >>> ')
+
+        # doc = Document(file_)
+
+        try:
+            doc = Document(file_)
+        except:
+            print('File not found. Program terminated.')
+            sys.exit(1)
 
         while True:
-            clear_screen()
-            logo()
-            print('Menue: Read Docx.Table')
-            print('-' * 45)
-            print('-No menue-')
-            print('-' * 45)
-            file_ = input('Enter file-name: >>> ')
+            try:
+                tables = doc.tables
+            except:
+                print('No tables in this Docx.File. Program terminated.')
+                sys.exit(1)
 
-            # Test-Document
-            # doc = Document('Test.docx')
+            info_ = ('File: ' + file_ + '\n' + 'Number of tables: ' + str(len(tables)))
+            clear_screen()
+            head()
+            print('Submenu: Read Docx.Table')
+            print('-' * 45)
+            print(info_)
+            print('-' * 45)
+            table_ = int(input('Enter table-number: >>> ')) - 1
+
+            result = []
 
             try:
-                doc = Document(file_)
+                for row in tables[table_].rows:
+                    interim = []
+                    result.append(interim)
+                    for cell in row.cells:
+                        interim.append(cell.text)
             except:
-                print('File not found. Script terminated.')
+                print('Table not found. Program terminated.')
                 sys.exit(1)
 
-            while True:
-                try:
-                    tables = doc.tables
-                except:
-                    print('No tables in this Docx.File. Script terminated.')
-                    sys.exit(1)
+            info_ = ('File: ' + file_ + '\n' + 'Number of tables: ' + str(len(tables)) + '\nSelected table: ' + str((table_ + 1)))
+            clear_screen()
+            head()
+            print('Submenu: Read Docx.Table')
+            print('-' * 45)
+            print(info_)
+            print('-' * 45)
 
-                clear_screen()
-                logo()
-                print('Menue: Read Docx.Table')
-                print(len(tables), ' tables(s) detected.')
-                print('-' * 45)
-                print('-No menue-')
-                print('-' * 45)
-                table_ = int(input('Enter table-number: >>> '))-1
+            print('\n>>> Printing Dataframe <<<\n')
+            # print(result)
+            labels = result[0]
+            df = pd.DataFrame.from_records(result[1:], columns=labels)
 
-                result = []
+            print(df)
+            print('\n')
 
-                try:
-                    for row in tables[table_].rows:
-                        interim = []
-                        result.append(interim)
-                        for cell in row.cells:
-                            interim.append(cell.text)
-                except:
-                    print('Table not found. Script terminated.')
-                    sys.exit(1)
+            head()
+            print('Submenu: Read Docx.Table')
+            print('-' * 45)
+            print(info_)
+            print('-' * 45)
+            loop_ = input('Type "home" for home-screen or "exit" for terminating the program: >>> ')
 
-                clear_screen()
-                logo()
-                print('Menue: Read Docx.Table')
-                print(len(tables), ' tables(s) detected.')
-                print('Table ', table_ + 1, ' selected.')
-                print('-' * 45)
-                print('-No menue-')
-                print('-' * 45)
+            if loop_ == 'home':
+                homemenu()
 
-                print('\n>>> Printing results <<<')
-                # print(result)
-                labels = result[0]
-                df = pd.DataFrame.from_records(result[1:], columns=labels)
-
-                print(df)
+            elif loop_ == 'exit':
+                print('Program terminated.')
                 sys.exit(1)
+
+            else:
+                print('No valid choice. Program terminated.')
+                sys.exit(1)
+
+
+# Main
+while True:
+    homemenu()
