@@ -3,6 +3,7 @@
 from os import system, name
 import sys
 from docx import Document
+from docx.opc.exceptions import PackageNotFoundError
 import pandas as pd
 
 
@@ -67,17 +68,12 @@ def submenu_1():
 
         try:
             doc = Document(file_)
-        except:
+        except PackageNotFoundError:
             print('File not found. Program terminated.')
             sys.exit(1)
 
         while True:
-            try:
-                tables = doc.tables
-            except:
-                print('No tables in this Docx.File. Program terminated.')
-                sys.exit(1)
-
+            tables = doc.tables
             info_ = ('File: ' + file_ + '\n' + 'Number of tables: ' + str(len(tables)))
             clear_screen()
             head()
@@ -95,11 +91,15 @@ def submenu_1():
                     result.append(interim)
                     for cell in row.cells:
                         interim.append(cell.text)
-            except:
+            except IndexError:
                 print('Table not found. Program terminated.')
                 sys.exit(1)
 
-            info_ = ('File: ' + file_ + '\n' + 'Number of tables: ' + str(len(tables)) + '\nSelected table: ' + str((table_ + 1)))
+            info_ = (
+                    'File: ' + file_ + '\n'
+                    + 'Number of tables: ' + str(len(tables)) + '\n'
+                    + 'Selected table: ' + str((table_ + 1))
+                    )
             clear_screen()
             head()
             print('Submenu: Read Docx.Table')
